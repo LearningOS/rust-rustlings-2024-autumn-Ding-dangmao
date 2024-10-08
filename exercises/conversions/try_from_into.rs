@@ -7,7 +7,6 @@
 // https://doc.rust-lang.org/std/convert/trait.TryFrom.html
 //
 // Execute `rustlings hint try_from_into` or use the `hint` watch subcommand for
-// a hint.
 
 use std::convert::{TryFrom, TryInto};
 
@@ -27,7 +26,7 @@ enum IntoColorError {
     IntConversion,
 }
 
-// I AM NOT DONE
+
 
 // Your task is to complete this implementation and return an Ok result of inner
 // type Color. You need to create an implementation for a tuple of three
@@ -41,6 +40,16 @@ enum IntoColorError {
 impl TryFrom<(i16, i16, i16)> for Color {
     type Error = IntoColorError;
     fn try_from(tuple: (i16, i16, i16)) -> Result<Self, Self::Error> {
+        let mut rt=Color{red:0,green:0,blue:0};
+        if let (a,b,c)=tuple{
+            if a<0||a>255||b<0||b>255||c<0||c>255{
+                return Err(IntoColorError::IntConversion);
+            }
+            rt.red=a as u8;
+            rt.green=b as u8;
+            rt.blue=c as u8;
+        }
+        Ok(rt)
     }
 }
 
@@ -48,6 +57,27 @@ impl TryFrom<(i16, i16, i16)> for Color {
 impl TryFrom<[i16; 3]> for Color {
     type Error = IntoColorError;
     fn try_from(arr: [i16; 3]) -> Result<Self, Self::Error> {
+        let mut rt=Color{red :0,green:0,blue:0};
+        let mut it=arr.iter();
+        if let Some(i)=it.next(){
+            if *i<0||*i>255{
+                return Err(IntoColorError::IntConversion);
+            }
+            rt.red=*i as u8;
+        }
+        if let Some(i)=it.next(){
+            if *i<0||*i>255{
+                return Err(IntoColorError::IntConversion);
+            }
+            rt.green=*i as u8;
+        }
+        if let Some(i)=it.next(){
+            if *i<0||*i>255{
+                return Err(IntoColorError::IntConversion);
+            }
+            rt.blue=*i as u8;
+        }
+        Ok(rt)
     }
 }
 
@@ -55,6 +85,30 @@ impl TryFrom<[i16; 3]> for Color {
 impl TryFrom<&[i16]> for Color {
     type Error = IntoColorError;
     fn try_from(slice: &[i16]) -> Result<Self, Self::Error> {
+        let mut rt=Color{red:0,green:0,blue:0};
+        let mut it=slice.iter();
+        if slice.len()!=3{
+             return Err(IntoColorError::BadLen);
+        }
+        if let Some(i)=it.next(){
+            if *i<0||*i>255{
+                return Err(IntoColorError::IntConversion);
+            }
+            rt.red=*i as u8;
+        }
+        if let Some(i)=it.next(){
+            if *i<0||*i>255{
+                return Err(IntoColorError::IntConversion);
+            }
+            rt.green=*i as u8;
+        }
+        if let Some(i)=it.next(){
+            if *i<0||*i>255{
+                return Err(IntoColorError::IntConversion);
+            }
+            rt.blue=*i as u8;
+        }
+        Ok(rt)
     }
 }
 
