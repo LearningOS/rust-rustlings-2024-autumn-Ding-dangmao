@@ -39,6 +39,9 @@ mod Foo {
     fn my_demo_function(a: u32) -> u32 {
         a
     }
+    //extern "C" fn my_demo_function_alias(a:u32)->u32{
+     //   return a;
+    //}
 }
 
 #[cfg(test)]
